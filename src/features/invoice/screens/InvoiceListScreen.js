@@ -59,7 +59,7 @@ export default function InvoiceListScreen() {
       <Header title="Lịch sử mua sắm 🛍️" subtitle="Những món đồ xinh đã rinh" />
 
       <View style={styles.summaryCard}>
-        <Text style={styles.summaryLabel}>Tổng thiệt hại 💕</Text>
+        <Text style={styles.summaryLabel}>Tổng thiệt hại 🥰</Text>
         <Text style={styles.summaryTotal}>{InvoiceController.formatPrice(totalSpent)}</Text>
       </View>
 
@@ -73,7 +73,7 @@ export default function InvoiceListScreen() {
             <Text style={styles.emptyIcon}>🧾</Text>
             <Text style={styles.emptyText}>Chưa chốt đơn nào cả</Text>
             <TouchableOpacity style={styles.actionBtn} onPress={() => navigation.navigate('Main', { screen: 'Home' })}>
-              <Text style={styles.actionBtnText}>Mua sắm ngay 🌸</Text>
+              <Text style={styles.actionBtnText}>Mua sắm ngay 🧸</Text>
             </TouchableOpacity>
           </View>
         }

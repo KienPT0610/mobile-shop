@@ -35,7 +35,7 @@ export default function LoginScreen() {
   const handleSubmit = async () => {
     setErrorMsg('');
     if (!username || !password || (!isLoginSync && !fullName)) {
-      setErrorMsg('Vui lòng điền đủ thông tin nha 🌸');
+      setErrorMsg('Vui lòng điền đủ thông tin nha 🧸');
       triggerShake();
       return;
     }
@@ -49,7 +49,7 @@ export default function LoginScreen() {
       res = await AuthController.register(username, password, fullName);
       if (res.success) {
         setIsLoginSync(true);
-        setErrorMsg('Tạo tài khoản thành công! Đăng nhập thôi 💕');
+        setErrorMsg('Tạo tài khoản thành công! Đăng nhập thôi 🥰');
       }
     }
     
@@ -70,15 +70,15 @@ export default function LoginScreen() {
     >
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
-          <Text style={styles.backIcon}>🌸 Trở về</Text>
+          <Text style={styles.backIcon}>🧸 Trở về</Text>
         </TouchableOpacity>
-        <Text style={styles.logo}>🎀 ShopEase</Text>
+        <Text style={styles.logo}>🐰 ShopEase</Text>
         <Text style={styles.slogan}>Mang cả thế giới siêu cute đến bạn</Text>
       </View>
 
       <View style={styles.bottomSection}>
         <Animated.View style={[styles.formCard, { transform: [{ translateX: shakeAnim }] }]}>
-          <Text style={styles.title}>{isLoginSync ? 'Mừng trở lại 💕' : 'Thành viên mới 🌸'}</Text>
+          <Text style={styles.title}>{isLoginSync ? 'Mừng trở lại 🥰' : 'Thành viên mới 🧸'}</Text>
           
           {!!errorMsg && (
             <View style={styles.errorBox}>
@@ -121,7 +121,7 @@ export default function LoginScreen() {
           </View>
 
           <TouchableOpacity style={[styles.submitBtn, loading && {opacity: 0.7}]} onPress={handleSubmit} disabled={loading}>
-            <Text style={styles.submitText}>{loading ? 'Đang gửi...' : (isLoginSync ? 'Đăng Nhập 🐾' : 'Đăng Ký 🎉')}</Text>
+            <Text style={styles.submitText}>{loading ? 'Đang gửi...' : (isLoginSync ? 'Đăng Nhập 🐼' : 'Đăng Ký 🎊')}</Text>
           </TouchableOpacity>
 
           <View style={styles.switchWrap}>

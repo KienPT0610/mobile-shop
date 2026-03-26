@@ -42,7 +42,7 @@ export default function CategoryListScreen() {
     }
     return (
       <View style={styles.emptyContainer}>
-        <Text style={styles.emptyIcon}>📦🎀</Text>
+        <Text style={styles.emptyIcon}>📦🐰</Text>
         <Text style={styles.emptyText}>Chưa có danh mục nào</Text>
       </View>
     );
@@ -50,7 +50,7 @@ export default function CategoryListScreen() {
 
   return (
     <View style={styles.container}>
-      <Header title="Tất cả danh mục 🌸" subtitle="Rất nhiều đồ dễ thương nha" />
+      <Header title="Tất cả danh mục 🧸" subtitle="Rất nhiều đồ dễ thương nha" />
 
       <FlatList
         data={categories}

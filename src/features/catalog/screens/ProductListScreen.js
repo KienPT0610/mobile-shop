@@ -8,7 +8,7 @@ import CatalogController from '../controllers/CatalogController';
 import ProductCard from '../components/ProductCard';
 import Header from '../../../components/Header';
 
-const FILTERS = ['Tất cả 💕', 'Còn hàng ✨', 'Giá tăng 📈', 'Giá giảm 📉'];
+const FILTERS = ['Tất cả 🥰', 'Còn hàng 🌟', 'Giá tăng 📈', 'Giá giảm 📉'];
 
 export default function ProductListScreen() {
   const navigation = useNavigation();
@@ -18,7 +18,7 @@ export default function ProductListScreen() {
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [search, setSearch] = useState('');
-  const [activeFilter, setActiveFilter] = useState('Tất cả 💕');
+  const [activeFilter, setActiveFilter] = useState('Tất cả 🥰');
   const [refreshing, setRefreshing] = useState(false);
 
   const loadData = async () => {
@@ -36,7 +36,7 @@ export default function ProductListScreen() {
     if (keyword) {
       res = res.filter(p => p.name.toLowerCase().includes(keyword.toLowerCase()));
     }
-    if (filterOpt === 'Còn hàng ✨') res = res.filter(p => p.stock > 0);
+    if (filterOpt === 'Còn hàng 🌟') res = res.filter(p => p.stock > 0);
     if (filterOpt === 'Giá tăng 📈') res.sort((a,b) => a.price - b.price);
     if (filterOpt === 'Giá giảm 📉') res.sort((a,b) => b.price - a.price);
     setFiltered(res);
@@ -103,7 +103,7 @@ export default function ProductListScreen() {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[COLORS.primary]} />}
         ListEmptyComponent={
           <View style={styles.empty}>
-            <Text style={styles.emptyIcon}>🌸</Text>
+            <Text style={styles.emptyIcon}>🧸</Text>
             <Text style={styles.emptyText}>Không tìm thấy sản phẩm nào nha</Text>
           </View>
         }

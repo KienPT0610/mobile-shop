@@ -12,9 +12,9 @@ import Header from '../../../components/Header';
 
 const { width } = Dimensions.get('window');
 const BANNERS = [
-  { id: '1', color: '#FFB6C1', text: '✨ Siêu sale 9.9 - Giảm 50%', emoji: '🎉' },
-  { id: '2', color: '#FFD1DC', text: '🌸 Freeship mọi đơn hàng', emoji: '🚚' },
-  { id: '3', color: '#A8E6CF', text: '🎀 Hàng mới về - Mua ngay', emoji: '🛍️' },
+  { id: '1', color: '#FFB6C1', text: '🌟 Siêu sale 9.9 - Giảm 50%', emoji: '🎊' },
+  { id: '2', color: '#FFD1DC', text: '🧸 Freeship mọi đơn hàng', emoji: '🚚' },
+  { id: '3', color: '#A8E6CF', text: '🐰 Hàng mới về - Mua ngay', emoji: '🛍️' },
 ];
 
 export default function HomeScreen() {
@@ -49,7 +49,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       {/* Sử dụng global Header */}
       <Header 
-        title={isLoggedIn ? `Xin chào, ${user?.fullName} 🌸` : 'Khám phá ShopEase 🎀'}
+        title={isLoggedIn ? `Xin chào, ${user?.fullName} 🧸` : 'Khám phá ShopEase 🐰'}
         subtitle="Hôm nay bạn muốn mua gì nào?"
       />
 
@@ -74,7 +74,7 @@ export default function HomeScreen() {
 
         {/* Categories Section */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Danh mục yêu thích 💕</Text>
+          <Text style={styles.sectionTitle}>Danh mục yêu thích 🥰</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Categories')} style={styles.seeAllBtn}>
             <Text style={styles.seeAll}>Tất cả</Text>
           </TouchableOpacity>
@@ -97,7 +97,7 @@ export default function HomeScreen() {
 
         {/* Featured Products Section */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Sản phẩm nổi bật ✨</Text>
+          <Text style={styles.sectionTitle}>Sản phẩm nổi bật 🌟</Text>
         </View>
         <View style={styles.productGrid}>
           {products.map(item => (

@@ -49,7 +49,7 @@ export default function CartScreen() {
 
   const handleCheckout = () => {
     Alert.alert(
-      'Chốt đơn nha 💕',
+      'Chốt đơn nha 🥰',
       `Tổng thiệt hại là ${CartController.formatPrice(cart.total)}, bạn chắc chưa?`,
       [
         { text: 'Suy nghĩ lại', style: 'cancel' },
@@ -81,7 +81,7 @@ export default function CartScreen() {
           <Text style={styles.emptyIcon}>🙈</Text>
           <Text style={styles.emptyText}>Bạn chưa đăng nhập kìa</Text>
           <TouchableOpacity style={styles.actionBtn} onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.actionBtnText}>Đăng nhập thôi 🌸</Text>
+            <Text style={styles.actionBtnText}>Đăng nhập thôi 🧸</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -107,7 +107,7 @@ export default function CartScreen() {
           <Text style={styles.emptyIcon}>🛍️💨</Text>
           <Text style={styles.emptyText}>Chưa có món đồ nào cả</Text>
           <TouchableOpacity style={styles.actionBtn} onPress={() => navigation.navigate('Main', { screen: 'Home' })}>
-            <Text style={styles.actionBtnText}>Đi mua sắm liền 🎀</Text>
+            <Text style={styles.actionBtnText}>Đi mua sắm liền 🐰</Text>
           </TouchableOpacity>
         </View>
       </View>

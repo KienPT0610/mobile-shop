@@ -24,7 +24,7 @@ export default function Header({ title, subtitle, showBack = false }) {
       {showBack ? (
         <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
           <View style={styles.backCircle}>
-            <Text style={styles.backIcon}>🌸</Text>
+            <Text style={styles.backIcon}>🧸</Text>
           </View>
           <Text style={styles.backText}>Trở lại</Text>
         </TouchableOpacity>
@@ -49,11 +49,11 @@ export default function Header({ title, subtitle, showBack = false }) {
         {/* Avatar / Login */}
         {isLoggedIn ? (
           <TouchableOpacity style={styles.avatarBtn} onPress={handleLogout}>
-            <Text style={styles.avatarText}>{user?.fullName?.charAt(0) || '🎀'}</Text>
+            <Text style={styles.avatarText}>{user?.fullName?.charAt(0) || '🐰'}</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.loginIcon}>💖</Text>
+            <Text style={styles.loginIcon}>🦊</Text>
           </TouchableOpacity>
         )}
       </View>

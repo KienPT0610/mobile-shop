@@ -13,7 +13,7 @@ export default function InvoiceCard({ invoice, onPress }) {
       </View>
       
       <View style={styles.info}>
-        <Text style={styles.orderId}>Đơn #{String(invoice.id).padStart(4, '0')} 🎀</Text>
+        <Text style={styles.orderId}>Đơn #{String(invoice.id).padStart(4, '0')} 🐰</Text>
         <Text style={styles.date}>{InvoiceController.formatDate(invoice.createdAt)}</Text>
         <Text style={styles.itemCount}>{invoice.itemCount || 0} món đồ</Text>
       </View>
@@ -21,12 +21,12 @@ export default function InvoiceCard({ invoice, onPress }) {
       <View style={styles.rightSection}>
         <Text style={styles.total}>{InvoiceController.formatPrice(invoice.totalAmount)}</Text>
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>ĐÃ XONG ✨</Text>
+          <Text style={styles.badgeText}>ĐÃ XONG 🌟</Text>
         </View>
       </View>
       
       <View style={styles.chevronWrap}>
-        <Text style={styles.chevron}>🌸</Text>
+        <Text style={styles.chevron}>🧸</Text>
       </View>
     </TouchableOpacity>
   );

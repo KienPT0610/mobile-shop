@@ -29,7 +29,7 @@ export default function InvoiceDetailScreen() {
     if (!invoice) return;
     const text = InvoiceController.generateShareText(invoice);
     import('react-native').then(({ Share }) => {
-      Share.share({ message: text, title: `Hóa đơn xinh đồ #${invoice.id} 🎀` });
+      Share.share({ message: text, title: `Hóa đơn xinh đồ #${invoice.id} 🐰` });
     });
   };
 
@@ -37,12 +37,12 @@ export default function InvoiceDetailScreen() {
 
   return (
     <View style={styles.container}>
-      <Header title={`Hóa đơn #${invoice.id} 🌸`} showBack={true} />
+      <Header title={`Hóa đơn #${invoice.id} 🧸`} showBack={true} />
 
       <ScrollView contentContainerStyle={styles.content}>
         {isFromCheckout && (
           <View style={styles.successBlock}>
-            <Animated.Text style={[styles.successIcon, { transform: [{ scale: checkScale }] }]}>💕</Animated.Text>
+            <Animated.Text style={[styles.successIcon, { transform: [{ scale: checkScale }] }]}>🥰</Animated.Text>
             <Text style={styles.successText}>Yayy, thanh toán thành công!</Text>
           </View>
         )}
@@ -54,7 +54,7 @@ export default function InvoiceDetailScreen() {
         </View>
 
         <View style={styles.invoiceCard}>
-          <Text style={styles.cardTitle}>Thông tin thanh toán ✨</Text>
+          <Text style={styles.cardTitle}>Thông tin thanh toán 🌟</Text>
           
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Mã đơn hàng</Text>
@@ -74,7 +74,7 @@ export default function InvoiceDetailScreen() {
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Trạng thái</Text>
             <View style={styles.badge}>
-              <Text style={styles.badgeText}>ĐÃ XONG 🎀</Text>
+              <Text style={styles.badgeText}>ĐÃ XONG 🐰</Text>
             </View>
           </View>
 
@@ -114,7 +114,7 @@ export default function InvoiceDetailScreen() {
             style={[styles.btn, styles.btnFilled]} 
             onPress={() => navigation.navigate('Main', { screen: 'Categories' })}
           >
-            <Text style={styles.btnTextFilled}>Mua đồ tiếp hoy 🌸</Text>
+            <Text style={styles.btnTextFilled}>Mua đồ tiếp hoy 🧸</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

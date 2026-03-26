@@ -31,7 +31,7 @@ export default function ProductCard({ product, onPress }) {
       </View>
 
       <TouchableOpacity style={styles.addBtn} onPress={handleAdd}>
-        <Text style={styles.addText}>🌸</Text>
+        <Text style={styles.addText}>🧸</Text>
       </TouchableOpacity>
     </TouchableOpacity>
   );

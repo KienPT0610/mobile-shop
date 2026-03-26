@@ -33,7 +33,7 @@ export default function ProductDetailScreen() {
 
   const handleAddToCart = async () => {
     if (!isLoggedIn) {
-      Alert.alert('Chưa đăng nhập nè 🌸', 'Bạn nhớ đăng nhập để thêm vào giỏ hàng nha.', [
+      Alert.alert('Chưa đăng nhập nè 🧸', 'Bạn nhớ đăng nhập để thêm vào giỏ hàng nha.', [
         { text: 'Xíu nữa', style: 'cancel' },
         { text: 'Đăng nhập', onPress: () => navigation.navigate('Login') }
       ]);
@@ -52,7 +52,7 @@ export default function ProductDetailScreen() {
     
     if (result.success) {
       dispatch(setCartAction(result.cart));
-      Alert.alert('Yeaaah 🎉', 'Đã thả đồ vào giỏ thành công rồi nha 💕');
+      Alert.alert('Yeaaah 🎊', 'Đã thả đồ vào giỏ thành công rồi nha 🥰');
     } else {
       Alert.alert('Ui dza 😥', result.message || 'Không thể thêm vào giỏ hàng');
     }
@@ -60,7 +60,7 @@ export default function ProductDetailScreen() {
 
   return (
     <View style={styles.container}>
-      <Header title="Chi tiết sản phẩm 🎀" showBack={true} />
+      <Header title="Chi tiết sản phẩm 🐰" showBack={true} />
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <ImageBackground source={{ uri: product.imageUrl }} style={styles.image}>
