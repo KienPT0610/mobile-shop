@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../../../constants/colors';
 import { FONTS } from '../../../constants/fonts';
 import AuthController from '../controllers/AuthController';
-import { useApp } from '../../../context/AppContext';
+import { useApp, loginAction } from '../../../context/AppContext';
 
 const { height } = Dimensions.get('window');
 
@@ -44,7 +44,7 @@ export default function LoginScreen() {
     let res;
     
     if (isLoginSync) {
-      res = await AuthController.login(username, password, dispatch);
+      res = await AuthController.login(username, password);
     } else {
       res = await AuthController.register(username, password, fullName);
       if (res.success) {
@@ -59,6 +59,7 @@ export default function LoginScreen() {
       setErrorMsg(res.message);
       triggerShake();
     } else if (isLoginSync) {
+      dispatch(loginAction(res.user));
       navigation.goBack();
     }
   };

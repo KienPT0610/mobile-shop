@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useApp, logoutAction } from '../context/AppContext';
+import AuthController from '../features/auth/controllers/AuthController';
 import { COLORS } from '../constants/colors';
 import { FONTS } from '../constants/fonts';
 
@@ -15,7 +16,11 @@ export default function Header({ title, subtitle, showBack = false }) {
   const handleLogout = () => {
     Alert.alert('Đăng xuất', 'Bạn muốn đăng xuất khỏi app?', [
       { text: 'Hủy', style: 'cancel' },
-      { text: 'Đồng ý', style: 'destructive', onPress: () => dispatch(logoutAction()) }
+      { text: 'Đồng ý', style: 'destructive', onPress: async () => {
+          await AuthController.logout();
+          dispatch(logoutAction());
+        } 
+      }
     ]);
   };
 
