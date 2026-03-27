@@ -1,6 +1,6 @@
 // @feature catalog | @layer Screen
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity, Dimensions, TextInput } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { COLORS } from '../../../constants/colors';
 import { FONTS } from '../../../constants/fonts';
@@ -24,6 +24,7 @@ export default function HomeScreen() {
 
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const [quickSearch, setQuickSearch] = useState('');
   
   const bannerRef = useRef(null);
   const [bannerIndex, setBannerIndex] = useState(0);
@@ -45,6 +46,11 @@ export default function HomeScreen() {
     }, [])
   );
 
+  const handleQuickSearch = () => {
+    const keyword = quickSearch.trim();
+    navigation.navigate('ProductList', { keyword, categoryName: keyword ? `Tìm: ${keyword} 🔎` : undefined });
+  };
+
   return (
     <View style={styles.container}>
       {/* Sử dụng global Header */}
@@ -54,6 +60,22 @@ export default function HomeScreen() {
       />
 
       <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.searchWrap}>
+          <Text style={styles.searchIcon}>🔎</Text>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Tìm món xinh xắn ngay trang chủ..."
+            placeholderTextColor={COLORS.text.light}
+            value={quickSearch}
+            onChangeText={setQuickSearch}
+            onSubmitEditing={handleQuickSearch}
+            returnKeyType="search"
+          />
+          <TouchableOpacity style={styles.searchBtn} onPress={handleQuickSearch}>
+            <Text style={styles.searchBtnText}>Tìm nè</Text>
+          </TouchableOpacity>
+        </View>
+
         {/* Banner */}
         <View style={styles.bannerContainer}>
           <FlatList
@@ -116,6 +138,33 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.background },
+  searchWrap: {
+    marginHorizontal: 20,
+    marginTop: 15,
+    marginBottom: 10,
+    height: 54,
+    borderRadius: 24,
+    backgroundColor: COLORS.surface,
+    borderWidth: 2,
+    borderColor: COLORS.secondary,
+    paddingHorizontal: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: COLORS.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 2
+  },
+  searchIcon: { fontSize: 18, marginRight: 10 },
+  searchInput: { flex: 1, fontSize: FONTS.sizes.md, color: COLORS.text.primary, fontWeight: '600' },
+  searchBtn: {
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 14
+  },
+  searchBtnText: { color: COLORS.surface, fontSize: FONTS.sizes.sm, fontWeight: '900' },
   bannerContainer: { height: 160, marginBottom: 25, marginTop: 15 },
   bannerSlide: {
     width: width - 40,

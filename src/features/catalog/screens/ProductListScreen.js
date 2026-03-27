@@ -8,17 +8,21 @@ import CatalogController from '../controllers/CatalogController';
 import ProductCard from '../components/ProductCard';
 import Header from '../../../components/Header';
 
-const FILTERS = ['Tất cả 💕', 'Còn hàng ✨', 'Giá tăng 📈', 'Giá giảm 📉'];
+const STOCK_FILTERS = ['Tất cả 💕', 'Còn hàng ✨', 'Sắp hết hàng ⏰'];
+const SORT_FILTERS = ['Mới nhất 🆕', 'Giá tăng 📈', 'Giá giảm 📉', 'Tên A-Z 🔤'];
+const PRICE_FILTERS = ['Mọi giá 💗', 'Dưới 500k 🐣', '500k-2tr 🌸', 'Trên 2tr 👑'];
 
 export default function ProductListScreen() {
   const navigation = useNavigation();
   const route = useRoute();
-  const { categoryId, categoryName } = route.params || {};
+  const { categoryId, categoryName, keyword } = route.params || {};
 
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [search, setSearch] = useState('');
-  const [activeFilter, setActiveFilter] = useState('Tất cả 💕');
+  const [search, setSearch] = useState(keyword || '');
+  const [activeStockFilter, setActiveStockFilter] = useState('Tất cả 💕');
+  const [activeSort, setActiveSort] = useState('Mới nhất 🆕');
+  const [activePriceFilter, setActivePriceFilter] = useState('Mọi giá 💗');
   const [refreshing, setRefreshing] = useState(false);
 
   const loadData = async () => {
@@ -26,30 +30,67 @@ export default function ProductListScreen() {
     if (categoryId) data = await CatalogController.getProductsByCategory(categoryId);
     else data = await CatalogController.getProducts();
     setProducts(data);
-    applyFilter(data, search, activeFilter);
+    applyFilter(data, search, activeStockFilter, activeSort, activePriceFilter);
   };
 
   useEffect(() => { loadData(); }, [categoryId]);
 
-  const applyFilter = (source, keyword, filterOpt) => {
-    let res = [...source];
-    if (keyword) {
-      res = res.filter(p => p.name.toLowerCase().includes(keyword.toLowerCase()));
+  useEffect(() => {
+    if (typeof keyword === 'string') {
+      setSearch(keyword);
+      applyFilter(products, keyword, activeStockFilter, activeSort, activePriceFilter);
     }
-    if (filterOpt === 'Còn hàng ✨') res = res.filter(p => p.stock > 0);
-    if (filterOpt === 'Giá tăng 📈') res.sort((a,b) => a.price - b.price);
-    if (filterOpt === 'Giá giảm 📉') res.sort((a,b) => b.price - a.price);
+  }, [keyword]);
+
+  const applyFilter = (source, keywordText, stockFilter, sortOpt, priceFilter) => {
+    let res = [...source];
+    if (keywordText) {
+      const key = keywordText.toLowerCase().trim();
+      res = res.filter(p =>
+        p.name.toLowerCase().includes(key) ||
+        (p.categoryName || '').toLowerCase().includes(key)
+      );
+    }
+    if (stockFilter === 'Còn hàng ✨') res = res.filter(p => p.stock > 0);
+    if (stockFilter === 'Sắp hết hàng ⏰') res = res.filter(p => p.stock > 0 && p.stock <= 10);
+
+    if (priceFilter === 'Dưới 500k 🐣') res = res.filter(p => p.price < 500000);
+    if (priceFilter === '500k-2tr 🌸') res = res.filter(p => p.price >= 500000 && p.price <= 2000000);
+    if (priceFilter === 'Trên 2tr 👑') res = res.filter(p => p.price > 2000000);
+
+    if (sortOpt === 'Giá tăng 📈') res.sort((a, b) => a.price - b.price);
+    if (sortOpt === 'Giá giảm 📉') res.sort((a, b) => b.price - a.price);
+    if (sortOpt === 'Tên A-Z 🔤') res.sort((a, b) => a.name.localeCompare(b.name));
+    if (sortOpt === 'Mới nhất 🆕') res.sort((a, b) => b.id - a.id);
     setFiltered(res);
   };
 
   const onSearch = (text) => {
     setSearch(text);
-    applyFilter(products, text, activeFilter);
+    applyFilter(products, text, activeStockFilter, activeSort, activePriceFilter);
   };
 
-  const onFilter = (f) => {
-    setActiveFilter(f);
-    applyFilter(products, search, f);
+  const onFilterStock = (f) => {
+    setActiveStockFilter(f);
+    applyFilter(products, search, f, activeSort, activePriceFilter);
+  };
+
+  const onFilterSort = (f) => {
+    setActiveSort(f);
+    applyFilter(products, search, activeStockFilter, f, activePriceFilter);
+  };
+
+  const onFilterPrice = (f) => {
+    setActivePriceFilter(f);
+    applyFilter(products, search, activeStockFilter, activeSort, f);
+  };
+
+  const resetFilters = () => {
+    setSearch('');
+    setActiveStockFilter('Tất cả 💕');
+    setActiveSort('Mới nhất 🆕');
+    setActivePriceFilter('Mọi giá 💗');
+    applyFilter(products, '', 'Tất cả 💕', 'Mới nhất 🆕', 'Mọi giá 💗');
   };
 
   const onRefresh = async () => {
@@ -78,17 +119,53 @@ export default function ProductListScreen() {
       </View>
 
       <View style={styles.filterWrap}>
+        <View style={styles.filterHeading}>
+          <Text style={styles.filterTitle}>Lọc nhẹ nhàng nè ✨</Text>
+          <TouchableOpacity style={styles.resetBtn} onPress={resetFilters}>
+            <Text style={styles.resetText}>Reset</Text>
+          </TouchableOpacity>
+        </View>
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={FILTERS}
+          data={STOCK_FILTERS}
           keyExtractor={item => item}
           renderItem={({item}) => (
             <TouchableOpacity 
-              style={[styles.filterChip, activeFilter === item && styles.filterActive]}
-              onPress={() => onFilter(item)}
+              style={[styles.filterChip, activeStockFilter === item && styles.filterActive]}
+              onPress={() => onFilterStock(item)}
             >
-              <Text style={[styles.filterText, activeFilter === item && styles.filterTextActive]}>{item}</Text>
+              <Text style={[styles.filterText, activeStockFilter === item && styles.filterTextActive]}>{item}</Text>
+            </TouchableOpacity>
+          )}
+        />
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={PRICE_FILTERS}
+          keyExtractor={item => item}
+          contentContainerStyle={styles.secondFilterRow}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={[styles.filterChip, activePriceFilter === item && styles.filterActive]}
+              onPress={() => onFilterPrice(item)}
+            >
+              <Text style={[styles.filterText, activePriceFilter === item && styles.filterTextActive]}>{item}</Text>
+            </TouchableOpacity>
+          )}
+        />
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={SORT_FILTERS}
+          keyExtractor={item => item}
+          contentContainerStyle={styles.secondFilterRow}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={[styles.filterChip, activeSort === item && styles.filterActive]}
+              onPress={() => onFilterSort(item)}
+            >
+              <Text style={[styles.filterText, activeSort === item && styles.filterTextActive]}>{item}</Text>
             </TouchableOpacity>
           )}
         />
@@ -129,12 +206,17 @@ const styles = StyleSheet.create({
   searchIcon: { fontSize: 20, marginRight: 15 },
   searchInput: { flex: 1, fontSize: FONTS.sizes.md, color: COLORS.text.primary, fontWeight: '500' },
   filterWrap: { paddingHorizontal: 20, paddingVertical: 15 },
+  filterHeading: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
+  filterTitle: { color: COLORS.text.secondary, fontSize: FONTS.sizes.sm, fontWeight: '900' },
+  resetBtn: { backgroundColor: COLORS.secondary, borderRadius: 14, paddingHorizontal: 12, paddingVertical: 6 },
+  resetText: { color: COLORS.text.primary, fontSize: FONTS.sizes.sm, fontWeight: '900' },
   filterChip: {
     paddingHorizontal: 16, paddingVertical: 10,
     borderRadius: 20, backgroundColor: COLORS.surface,
     borderWidth: 2, borderColor: COLORS.border,
     marginRight: 10,
   },
+  secondFilterRow: { paddingTop: 10 },
   filterActive: { backgroundColor: COLORS.primary, borderColor: COLORS.primary },
   filterText: { color: COLORS.text.secondary, fontSize: FONTS.sizes.sm, fontWeight: 'bold' },
   filterTextActive: { color: COLORS.surface },
