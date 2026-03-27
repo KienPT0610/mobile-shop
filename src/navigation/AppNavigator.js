@@ -8,13 +8,14 @@ import { COLORS } from '../constants/colors';
 
 // Screens
 import LoginScreen from '../features/auth/screens/LoginScreen';
-import HomeScreen from '../features/catalog/screens/HomeScreen';
-import CategoryListScreen from '../features/catalog/screens/CategoryListScreen';
-import ProductListScreen from '../features/catalog/screens/ProductListScreen';
-import ProductDetailScreen from '../features/catalog/screens/ProductDetailScreen';
-import CartScreen from '../features/cart/screens/CartScreen';
-import InvoiceListScreen from '../features/invoice/screens/InvoiceListScreen';
-import InvoiceDetailScreen from '../features/invoice/screens/InvoiceDetailScreen';
+import HomeScreen from '../features/movie/screens/HomeScreen';
+import MovieListScreen from '../features/movie/screens/MovieListScreen';
+import TheaterListScreen from '../features/movie/screens/TheaterListScreen';
+import ShowtimeListScreen from '../features/movie/screens/ShowtimeListScreen';
+import MovieDetailScreen from '../features/movie/screens/MovieDetailScreen';
+import SeatBookingScreen from '../features/ticket/screens/SeatBookingScreen';
+import TicketListScreen from '../features/ticket/screens/TicketListScreen';
+import TicketDetailScreen from '../features/ticket/screens/TicketDetailScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -47,17 +48,19 @@ function MainTabs() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           if (route.name === 'Home') iconName = focused ? 'home' : 'home-outline';
-          else if (route.name === 'Categories') iconName = focused ? 'grid' : 'grid-outline';
-          else if (route.name === 'Cart') iconName = focused ? 'cart' : 'cart-outline';
-          else if (route.name === 'Invoices') iconName = focused ? 'receipt' : 'receipt-outline';
+          else if (route.name === 'Movies') iconName = focused ? 'film' : 'film-outline';
+          else if (route.name === 'Theaters') iconName = focused ? 'business' : 'business-outline';
+          else if (route.name === 'Showtimes') iconName = focused ? 'time' : 'time-outline';
+          else if (route.name === 'Tickets') iconName = focused ? 'ticket' : 'ticket-outline';
           return <Ionicons name={iconName} size={size + 2} color={color} />;
         },
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Trang chủ' }} />
-      <Tab.Screen name="Categories" component={CategoryListScreen} options={{ title: 'Danh mục' }} />
-      <Tab.Screen name="Cart" component={CartScreen} options={{ title: 'Giỏ hàng' }} />
-      <Tab.Screen name="Invoices" component={InvoiceListScreen} options={{ title: 'Lịch sử' }} />
+      <Tab.Screen name="Movies" component={MovieListScreen} options={{ title: 'Phim' }} />
+      <Tab.Screen name="Theaters" component={TheaterListScreen} options={{ title: 'Rạp' }} />
+      <Tab.Screen name="Showtimes" component={ShowtimeListScreen} options={{ title: 'Lịch chiếu' }} />
+      <Tab.Screen name="Tickets" component={TicketListScreen} options={{ title: 'Vé' }} />
     </Tab.Navigator>
   );
 }
@@ -68,9 +71,9 @@ export default function AppNavigator() {
       <Stack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: COLORS.background } }}>
         <Stack.Screen name="Main" component={MainTabs} />
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="ProductList" component={ProductListScreen} />
-        <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
-        <Stack.Screen name="InvoiceDetail" component={InvoiceDetailScreen} />
+        <Stack.Screen name="MovieDetail" component={MovieDetailScreen} />
+        <Stack.Screen name="SeatBooking" component={SeatBookingScreen} />
+        <Stack.Screen name="TicketDetail" component={TicketDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

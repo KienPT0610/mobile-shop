@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useApp, logoutAction } from '../context/AppContext';
 import AuthController from '../features/auth/controllers/AuthController';
 import { COLORS } from '../constants/colors';
@@ -9,9 +9,7 @@ import { FONTS } from '../constants/fonts';
 export default function Header({ title, subtitle, showBack = false }) {
   const navigation = useNavigation();
   const { state, dispatch } = useApp();
-  const { user, isLoggedIn, cart } = state;
-
-  const cartCount = cart?.items?.reduce((s, i) => s + i.quantity, 0) || 0;
+  const { user, isLoggedIn } = state;
 
   const handleLogout = () => {
     Alert.alert('Đăng xuất', 'Bạn muốn đăng xuất khỏi app?', [
@@ -41,14 +39,8 @@ export default function Header({ title, subtitle, showBack = false }) {
       )}
 
       <View style={styles.rightSection}>
-        {/* Cart */}
-        <TouchableOpacity style={styles.cartBtn} onPress={() => navigation.navigate('Main', { screen: 'Cart' })}>
-          <Text style={styles.cartIcon}>🛒</Text>
-          {cartCount > 0 && (
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>{cartCount}</Text>
-            </View>
-          )}
+        <TouchableOpacity style={styles.cartBtn} onPress={() => navigation.navigate('Main', { screen: 'Tickets' })}>
+          <Text style={styles.cartIcon}>🎟️</Text>
         </TouchableOpacity>
 
         {/* Avatar / Login */}
@@ -101,14 +93,6 @@ const styles = StyleSheet.create({
   rightSection: { flexDirection: 'row', alignItems: 'center' },
   cartBtn: { position: 'relative', marginRight: 15, padding: 5, backgroundColor: COLORS.background, borderRadius: 20, width: 44, height: 44, justifyContent: 'center', alignItems: 'center' },
   cartIcon: { fontSize: 20 },
-  badge: {
-    position: 'absolute', top: -5, right: -5,
-    backgroundColor: COLORS.primary,
-    borderRadius: 12, width: 24, height: 24,
-    justifyContent: 'center', alignItems: 'center',
-    borderWidth: 2, borderColor: COLORS.surface
-  },
-  badgeText: { color: COLORS.surface, fontSize: 11, fontWeight: 'bold' },
   avatarBtn: {
     width: 44, height: 44,
     borderRadius: 22,

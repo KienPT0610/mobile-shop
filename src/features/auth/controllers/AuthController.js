@@ -2,7 +2,7 @@
 import UserModel from '../models/UserModel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SESSION_KEY = '@shopping/user';
+const SESSION_KEY = '@movie/session_user';
 
 const AuthController = {
   async login(username, password) {
